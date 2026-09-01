@@ -17,3 +17,37 @@ An intelligent multi-agent research system that leverages specialized AI agents 
   - **OpenAI Python client** — LLM inference
 
 ## How It's Organized
+
+**How it fits together:**
+
+1. **Search Agent** (`tools.web_search`) queries the web via Tavily API and returns top results with titles, URLs, and snippets.
+2. **Reader Agent** (`tools.scrape_url`) extracts deep content from the most relevant URL using BeautifulSoup, removing boilerplate (scripts, styles, nav, footer).
+3. **Writer Chain** uses a LangChain prompt template to synthesize search results and scraped content into a structured research report (Introduction, Key Findings, Conclusion, Sources).
+4. **Critic Chain** evaluates the report with a score (X/10), strengths, areas for improvement, and a verdict.
+
+The **app.py** UI (Streamlit) visualizes progress through step cards and displays results in collapsible panels. The **pipeline.py** CLI runs the same flow for headless/script execution.
+
+## How to Run It
+
+### Prerequisites
+
+- Python 3.8+
+- OpenAI API key (`OPENAI_API_KEY`)
+- Tavily API key (`TAVILY_API_KEY`)
+
+### Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Kamalika506/multi-agent-research-system.git
+   cd multi-agent-research-system
+
+
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+pip install -r requirements.txt
+
+streamlit run app.py
+
+python pipeline.py
